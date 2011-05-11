@@ -109,15 +109,21 @@
 		$urlRegs[] ='/http:\/\/t\.co\/([a-z0-9]{5}[a-z0-9]*)/i';
 		
 		//根据需要开启
-//		$urlRegs[] ='/http:\/\/moby\.to\/([a-z0-9]{5}[a-z0-9]*)/i';
-//		$urlRegs[] ='/http:\/\/tr\.im\/([a-z0-9]{4}[a-z0-9]*)/i';
-//		$urlRegs[] ='/http:\/\/snurl\.com\/([a-z0-9]{5}[a-z0-9]*)/i';
-//		$urlRegs[] ='/http:\/\/short\.ie\/([a-z0-9]{6}[a-z0-9]*)/i';
-//		$urlRegs[] ='/http:\/\/kl\.am\/([a-z0-9]{4}[a-z0-9]*)/i';
-//		$urlRegs[] ='/http:\/\/idek\.net\/([a-z0-9]{3}[a-z0-9]*)/i';
-//		$urlRegs[] ='/http:\/\/cli\.gs\/([a-z0-9]{6}[a-z0-9]*)/i';
-//		$urlRegs[] ='/http:\/\/u\.nu\/([a-z0-9]{5}[a-z0-9]*)/i';
-//		$urlRegs[] ='/http:\/\/digg\.com\/([a-z0-9]{6}[a-z0-9]*)/i';
+		$urlRegs[] ='/http:\/\/moby\.to\/([a-z0-9]{5}[a-z0-9]*)/i';
+		$urlRegs[] ='/http:\/\/tr\.im\/([a-z0-9]{4}[a-z0-9]*)/i';
+		$urlRegs[] ='/http:\/\/snurl\.com\/([a-z0-9]{5}[a-z0-9]*)/i';
+		$urlRegs[] ='/http:\/\/short\.ie\/([a-z0-9]{6}[a-z0-9]*)/i';
+		$urlRegs[] ='/http:\/\/kl\.am\/([a-z0-9]{4}[a-z0-9]*)/i';
+		$urlRegs[] ='/http:\/\/idek\.net\/([a-z0-9]{3}[a-z0-9]*)/i';
+		$urlRegs[] ='/http:\/\/cli\.gs\/([a-z0-9]{6}[a-z0-9]*)/i';
+		$urlRegs[] ='/http:\/\/u\.nu\/([a-z0-9]{5}[a-z0-9]*)/i';
+		$urlRegs[] ='/http:\/\/digg\.com\/([a-z0-9]{6}[a-z0-9]*)/i';
+		
+		$urlRegs[] ='/http:\/\/goo\.gl\/([a-z0-9\/]*)/i';
+		$urlRegs[] ='/http:\/\/sinaurl\.cn\/([a-z0-9\/]*)/i';
+		$urlRegs[] ='/http:\/\/xpo\.sh\/([a-z0-9\/]*)/i';
+		$urlRegs[] ='/http:\/\/yfrog\.com\/([a-z0-9\/]*)/i';
+		$urlRegs[] ='/http:\/\/4sq\.com\/([a-z0-9\/]*)/i';
 		
 		$objs = false;
 		

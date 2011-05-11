@@ -131,6 +131,7 @@ class TwitterOAuth {
 	 */
 	function get($url, $parameters = array()) {
 		$response = $this->oAuthRequest($url, 'GET', $parameters);
+		$response = preg_replace("/http:\/\/.+\.twimg.com\//", "https://s3.amazonaws.com/twitter_production/", $response);
 		if ($this->type == 'json' && $this->decode_json) {
 			return json_decode($response);
 		}elseif($this->type == 'xml' && function_exists('simplexml_load_string')){
@@ -756,6 +757,9 @@ class TwitterOAuth {
 
 	function update($status, $replying_to = false , $lat = false , $long = false){
 		try{
+			if (mb_strlen($status,"UTF-8") >  140){
+				$status = mb_substr($status, 0, 136,"UTF-8")."...";
+   	  }
 			$url = '/statuses/update';
 			$args = array();
 			$args['status'] = stripslashes($status);

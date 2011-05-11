@@ -9,7 +9,7 @@
 	<div id="error">
 
 <?php
-	if ( isset($_POST['username']) && isset($_POST['password']) ) {
+	if ( isset($_POST['username']) && isset($_POST['password']) && ($allow[$_POST['username']] === "true")) {
 		
 		//附加密码
 		if ( TWITESE_PASSWORD != '' && $_POST['twitese_password'] != TWITESE_PASSWORD) {

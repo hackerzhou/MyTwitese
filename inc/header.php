@@ -3,11 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="twitter,推特,微博客,翻墙,推特中文圈,twitese" />
-<meta name="description" content="推特中文圈提供更友好的界面和功能让你不翻墙使用twitter" />
 <link rel="shortcut icon" href="img/favicon.ico" />
 <link type="text/css" href="css/main.css" rel="stylesheet" />
-<title><?php echo $title ?> <?php echo SITE_NAME ?> Twitese</title>
+<title><?php echo $title ?> | <?php echo SITE_NAME ?></title>
 <?php 
 	$headerBg = getColor("headerBg","#DAD6C0");
 	$bodyBg = getColor("bodyBg","#F5F3EC");
