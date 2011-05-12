@@ -12,7 +12,7 @@
 <div class="main_full">
 	<div id="setting">
 		<?php 
-			$type = isset($_GET['t'])? $_GET['t'] : 1;
+			$type = isset($_GET['t'])? $_GET['t'] : 3;
 			if (isset($_POST['name'])) {
 				$t = getTwitter();
 				$args = array();
@@ -27,14 +27,8 @@
 		?>
 		
 		<div id="subnav">
-		<?php if ($type == 1) {?>
-	       	<span class="subnavNormal">twitese设置</span><span class="subnavLink"><a href="setting.php?t=2">外观设置</a></span><span class="subnavLink"><a href="setting.php?t=3">个人设置</a></span>
-		<?php } else if ($type == 2) {?>
-	       	<span class="subnavLink"><a href="setting.php?t=1">twitese设置</a></span><span class="subnavNormal">外观设置</span><span class="subnavLink"><a href="setting.php?t=3">个人设置</a></span>
-		<?php } else {?>
-			<span class="subnavLink"><a href="setting.php?t=1">twitese设置</a></span><span class="subnavLink"><a href="setting.php?t=2">外观设置</a></span><span class="subnavNormal">个人设置</span>
-		<?php } ?>
-	    </div>
+			<span class="subnavNormal">个人设置</span>
+	  </div>
     
 	    <?php if ($type == 3) {	?>
 	    <?php 

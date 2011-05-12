@@ -214,7 +214,7 @@ class TwitterOAuth {
 		curl_setopt($ci, CURLOPT_URL, $url);
 		$response = curl_exec($ci);
 		if ($_SERVER["SERVER_PORT"] == 443) {
-			$response = preg_replace("/image_url\":\"http:\\\\\\/\\\\\\/a\\d+\.twimg\.com\\\\\\//","image_url\":\"https:\\/\\/s3.amazonaws.com\\/twitter_production\\/", $response);
+			$response = preg_replace("/(img|image)_url(\W+)http:((\\\\)?\\/){2}a\\d+\.twimg\.com(\\\\)?\\//", "\${1}_url\${2}https:\${4}/\${4}/s3.amazonaws.com\${4}/twitter_production\${4}/", $response);
 		}
 		$this->http_code = curl_getinfo($ci, CURLINFO_HTTP_CODE);
 		$this->last_api_call = $url;
