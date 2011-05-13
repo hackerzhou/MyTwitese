@@ -12,7 +12,7 @@
 <div class="main_full">
 	<div id="setting">
 		<?php 
-			$type = isset($_GET['t'])? $_GET['t'] : 1;
+			$type = isset($_GET['t'])? $_GET['t'] : 3;
 			if (isset($_POST['name'])) {
 				$t = getTwitter();
 				$args = array();
@@ -27,14 +27,13 @@
 		?>
 		
 		<div id="subnav">
-		<?php if ($type == 1) {?>
-	       	<span class="subnavNormal">twitese设置</span><span class="subnavLink"><a href="setting.php?t=2">外观设置</a></span><span class="subnavLink"><a href="setting.php?t=3">个人设置</a></span>
-		<?php } else if ($type == 2) {?>
-	       	<span class="subnavLink"><a href="setting.php?t=1">twitese设置</a></span><span class="subnavNormal">外观设置</span><span class="subnavLink"><a href="setting.php?t=3">个人设置</a></span>
-		<?php } else {?>
-			<span class="subnavLink"><a href="setting.php?t=1">twitese设置</a></span><span class="subnavLink"><a href="setting.php?t=2">外观设置</a></span><span class="subnavNormal">个人设置</span>
+			<?php if ($type == 2) {?>
+	       	<span class="subnavLink"><a href="setting.php?t=3">个人设置</a></span><span class="subnavNormal">外观设置</span>
+			<?php } else {?>
+			<span class="subnavNormal">个人设置</span><span class="subnavLink"><a href="setting.php?t=2">外观设置</a></span>
 		<?php } ?>
 	    </div>
+	  </div>
     
 	    <?php if ($type == 3) {	?>
 	    <?php 
@@ -136,79 +135,7 @@
 		        </table>
 			</form>
 			
-		<?php } else if ($type == 1) {?>
-		<?php 
-			$apiUrl = '';
-			$rtStyle = 0;
-			$showImg = 1;
-			
-			if ( isset($_POST['apiurl_input']) ) {
-				$time = time() + 3600*24*30;
-				
-				$showImg = (isset($_POST['show_img']) && $_POST['show_img'] == "on")? 1: 0;
-				setcookie("rt_style", $_POST['rt_style'], $time);
-				setcookie("show_img", $showImg, $time);
-				
-				if (preg_match("/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"])*$/", $_POST['apiurl_input'])) {
-					$time = time() + 3600*24*30;
-					
-					setcookie("apiurl", $_POST['apiurl_input'], $time);
-					
-					echo "<div id=\"sentTip\">修改配置成功</div>";
-					
-				} else {
-					if (trim($_POST['apiurl_input']) == '') {
-						delCookie('apiurl');
-						$apiUrl = '';
-						echo "<div id=\"sentTip\">修改配置成功</div>";
-					} else {
-						echo "<div id=\"sentTip\">修改配置失败，API URL不合法</div>";
-					}
-				}
-			}
-			
-			if (isset($_COOKIE['apiurl'])) {
-				$apiUrl = $_COOKIE['apiurl'];
-			}
-			if (isset($_COOKIE['rt_style']) && $_COOKIE['rt_style'] == 1) {
-				$rtStyle = 1;
-			}
-			if (isset($_COOKIE['show_img']) && $_COOKIE['show_img'] == 0) {
-				$showImg = 0;
-			}
-				
-		?>
-			<form id="style_form" action="setting.php?t=1" method="post">
-			
-		        <table id="setting_table">
-		        	<tr>
-		        		<td class="style_title">自定义API：</td>
-		        		<td><input type="text" id="apiurl_input" name="apiurl_input" value="<?php echo $apiUrl?>" /> (设置为空恢复默认)</td>
-		        	</tr>
-		        	<tr>
-		        		<td class="style_title">官方RT格式：</td>
-		        		<td>
-		        			<input type="radio" name="rt_style" id="rt_style1" value="0" <?php echo $rtStyle ? '' : 'checked="checked"'?> /><label for="rt_style1">显示RT者头像，与普通RT方式一致</label>
-		        		</td>
-		        	</tr>
-		        	<tr>
-		        		<td class="style_title"></td>
-		        		<td>
-		        			<input type="radio" name="rt_style" id="rt_style2" value="1" <?php echo $rtStyle ? 'checked="checked"' : ''?> /><label for="rt_style2">显示原作者头像，作者名字前有RT标志，底部显示RT by xx</label>
-		        		</td>
-		        	</tr>
-		        	<tr>
-		        		<td class="style_title">图片显示：</td>
-		        		<td><input type="checkbox" name="show_img" <?php echo $showImg ? 'checked="checked"': ""?> /> <label for="show_img">自动显示图片</label></td>
-		        	</tr>
-		        	<tr>
-		        		<td colspan="2" style="text-align:center"><input type="submit" style="float:none" class="submit_btn" value="保存" />
-		        		</td>
-		        	</tr>
-		        </table>
-			</form>
-		
-		<?php }?>
+		<?php } ?>
 	</div>
 </div>
 
