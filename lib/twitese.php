@@ -230,7 +230,7 @@
 			$access_token = $_SESSION['access_token'] ? $_SESSION['access_token'] : null;
 			$oauth_token = $access_token ? $access_token['oauth_token'] : $_COOKIE['oauth_token'];
 			$oauth_token_secret = $access_token ? $access_token['oauth_token_secret'] : $_COOKIE['oauth_token_secret'];
-			$oauth = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $oauth_token, $oauth_token_secret);
+			$oauth = new TwitterOAuth(OAUTH_KEY, OAUTH_SECRET, $oauth_token, $oauth_token_secret);
 			return $oauth;
 	}
 	

@@ -2,6 +2,7 @@
 session_start();
 require('include/twitteroauth.php');
 require('config.php');
+require("../acl.php");
 if(isset($_POST['url_suffix'])){
     $_SESSION['url_suffix'] = preg_replace('/[^a-zA-Z0-9]/','',$_POST['url_suffix']);
 }
@@ -47,6 +48,11 @@ if(isset($_GET['oauth_token']) && isset($_GET['oauth_verifier'])){
     $access_token = $connection->getAccessToken($_GET['oauth_verifier']);
     if($connection->http_code == 200){
         $old_tokens = glob('oauth/*.'.$access_token['screen_name']);
+        $username = $access_token['screen_name'];
+    	if (!isAllow($username)) {
+            sendDenyMessage($username);
+            return;
+        }
         if(!empty($old_tokens)){
             foreach($old_tokens as $file){
                 unlink($file);

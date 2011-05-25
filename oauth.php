@@ -11,7 +11,7 @@ if (isset($_REQUEST['oauth_token'])) {
 		header('Location: ./login.php');
 	}
 	else{		
-		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $_COOKIE['oauth_token'], $_COOKIE['oauth_token_secret']);
+		$connection = new TwitterOAuth(OAUTH_KEY, OAUTH_SECRET, $_COOKIE['oauth_token'], $_COOKIE['oauth_token_secret']);
 		
 		$access_token = $connection->getAccessToken($_REQUEST['oauth_verifier']);
 
@@ -45,7 +45,7 @@ if (isset($_REQUEST['oauth_token'])) {
 	}
 
 }else{
-	$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
+	$connection = new TwitterOAuth(OAUTH_KEY, OAUTH_SECRET);
 	
 	$scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
 	$port = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';

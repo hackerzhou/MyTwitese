@@ -25,7 +25,7 @@
 			<input type="submit" id="login_btn" value="登录" />
 		</form>
 	</div>
-	<?php if(CONSUMER_KEY && CONSUMER_SECRET){?>
+	<?php if(OAUTH_KEY && OAUTH_SECRET){?>
 		<div class="clear"></div>
 		<div class="description">
 			<p><h3>使用OAuth登陆</h3></p>

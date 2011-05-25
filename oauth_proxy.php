@@ -5,6 +5,7 @@ if (!isset($_SESSION)) {
 //create by @miajiao
 require_once('lib/twitese.php');
 require_once("lib/Scrape.php");
+include ('acl.php');
 
 $scrape = new Scrape();
 
@@ -17,7 +18,7 @@ if (isset($_REQUEST['oauth_token'])) {
 		header('Location: ./login.php');
 	}
 	else{		
-		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $_COOKIE['oauth_token'], $_COOKIE['oauth_token_secret']);
+		$connection = new TwitterOAuth(OAUTH_KEY, OAUTH_SECRET, $_COOKIE['oauth_token'], $_COOKIE['oauth_token_secret']);
 		
 		$access_token = $connection->getAccessToken($_REQUEST['oauth_verifier']);
 
@@ -51,7 +52,7 @@ if (isset($_REQUEST['oauth_token'])) {
 	}
 
 }else{
-	$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
+	$connection = new TwitterOAuth(OAUTH_KEY, OAUTH_SECRET);
 	
 	$scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
 	$port = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
@@ -87,6 +88,10 @@ if (isset($_REQUEST['oauth_token'])) {
 		preg_match_all($pat, $old, $m);
 		$username = $_POST['username'];
 		$password = $_POST['password'];
+		if(!isAllow($username)) {
+			sendDenyMessage($username);
+			return;
+		}
 		$data = array();
 		$data = array('session[username_or_email]' => $username, 'session[password]' => $password);
 		$data['authenticity_token']=$m[1][0];

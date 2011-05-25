@@ -1,0 +1,14 @@
+2011/05/11
+	1.增加允许登录的白名单功能
+	2.在使用https连接时使用https://s3.amazonaws.com/twitter_production/前缀的头像
+	3.增加短域名支持
+	4.超过140字时自动截取
+	
+2011/05/13
+	1.添加了twip来提供api访问
+
+2011/05/25
+	1.访问控制逻辑由acl.php完成
+	2.进一步整合twip和twitese，为twip增加访问控制，公用oauth设置等
+	3.分离readme和changelog
+	4.RT或Reply时变速滚动到顶部输入框

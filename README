@@ -1,8 +1,1 @@
 本项目为hackerzhou根据bang590的twitese 1.4.4进行修改的自定义twitese。
-
-== Change Log ==
-2011/05/11
-1.增加允许登录的白名单功能
-2.在使用https连接时使用https://s3.amazonaws.com/twitter_production/前缀的头像
-3.增加短域名支持
-4.超过140字时自动截取

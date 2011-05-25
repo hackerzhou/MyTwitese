@@ -2,14 +2,14 @@
 	include ('lib/twitese.php');
 	$title = "登陆";
 	include ('inc/header.php');
-	
+	include ('acl.php');
 ?>
 
 <div id="login_area">
 	<div id="error">
 
 <?php
-	if ( isset($_POST['username']) && isset($_POST['password']) && ($allow[$_POST['username']] === "true")) {
+	if ( isset($_POST['username']) && isset($_POST['password']) && (isAllow($_POST['username']))) {
 		
 		//附加密码
 		if ( TWITESE_PASSWORD != '' && $_POST['twitese_password'] != TWITESE_PASSWORD) {
@@ -30,7 +30,7 @@
 			
 		}
 	} else {
-		echo "<p>非法请求，请返回</p>";
+		sendDenyMessage(isset($_POST['username']) ? $_POST['username'] : "未知用户");
 	}
 ?>
 
