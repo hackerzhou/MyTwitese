@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteBase /twitter/
+RewriteRule ^([a-zA-Z0-9_]+)$ user.php?id=$1 [L,QSA]
+RewriteRule ^(\d+)$ status.php?id=$1 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule api/(.*) api/index.php [L,QSA]
+
+ExpiresByType text/html "access"
+DirectoryIndex index.html index.php
