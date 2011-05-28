@@ -16,3 +16,6 @@
 2011/05/27
 	1.删除了twip的.htaccess，合用twitese的.htaccess，服务器必须支持url rewrite
 	2.将lib/config.php文件重命名为lib/config_example.php，为后续做安装配置脚本做准备
+
+2011/05/28
+	1.增加了安装配置脚本，installer/install.sh，可以自动从github下载最新的release版本进行安装。运行方法：sudo ./install.sh
