@@ -17,9 +17,10 @@ img{border:none}
 h2{float:left;_margin:10px 0 0 8px;font-size:14px;font-weight:700;margin:10px 0 0 15px;display:block;}
 #tip{float:right;color:#999;font-size:12px;margin:0 30px 0 0}
 #tip b{font-size:24px;margin:3px}
-#textbox{font-size:14px;overflow:hidden;width:495px;height:80px;background-color:#fbfbfb;border:1px solid #A7A6AA;margin:10px 0 0 10px;padding:5px}
-#textbox:hover{background-color:#FFF}
-#submit_btn,#login_btn, .submit_btn{background:url(../img/btn.png);border:none;float:right;width:120px;height:42px;color:#FFF;font-size:16px;font-weight:700;margin:10px 20px 0 0}
+#textbox{border-radius:5px;box-shadow:0 1px #FFF;font-size:14px;overflow:hidden;width:495px;height:80px;background-color:#fbfbfb;border:1px solid #A7A6AA;margin:10px 0 0 10px;padding:5px}
+#textbox:hover{background-color:#FFF;outline:none;border:1px solid #999;cursor:text!important;}
+#textbox:focus{-moz-box-shadow:0 0 8px rgba(82,168,236,0.5);-webkit-box-shadow:0 0 8px rgba(82,168,236,0.5);border-color:rgba(82,168,236,0.75)!important;}
+#submit_btn,#login_btn, .submit_btn{background:url(../img/btn.png);color:#333;border-radius:4px;border:1px #ccc solid;float:right;width:100px;height:32px;font-size:16px;font-weight:700;margin:10px 20px 0 0}
 .timeline{border-top:1px dashed #CCC;margin:15px 5px}
 .timeline li{border-bottom:1px dashed #CCC;height:100%;_padding:5px 10px;overflow:hidden;position:relative;margin:0;padding:10px 10px 5px}
 .status_id{display:none}
@@ -44,8 +45,8 @@ h2{float:left;_margin:10px 0 0 8px;font-size:14px;font-weight:700;margin:10px 0 
 #sidenav a{display:block;font-size:15px;border-bottom:1px solid #ccc;font-weight:700;text-decoration:none;background-color:#f4f4f4;color:#000;padding:15px}
 #sidenav a:hover{background-color:#fff}
 h3{font-size:14px;margin:14px 0 0 14px}
-#sidepost{padding-bottom:20px;margin:5px 10px}
-#sidepost li{font-size:12px;margin:12px 10px;line-height:18px;}
+#sidepost{margin:5px 10px}
+#sidepost li{font-size:12px;margin:5px 10px;line-height:18px;}
 .login{width:270px;display:block;margin:0 auto;padding:0 20px 0 40px}
 .login_label{width:70px; text-align:right; display:inline-block}
 #username,#password{display:inline;-moz-border-radius:6px;border:1px solid #c7c5b8;padding:4px;width:150px;}
@@ -64,7 +65,7 @@ h3{font-size:14px;margin:14px 0 0 14px}
 .rank_tag{width:400px}
 .rank_name{font-size:14px;font-weight:700}
 .rank_name em{font-weight:normal;font-style:normal}
-#rank_addtag_btn{background:url(../img/btn.png);border:none;width:70px;height:18px;_padding:10px 25px 11px 25px;color:#FFF;font-size:16px;font-weight:700;display:block;text-decoration:none;margin:20px 50px;padding:12px 25px}
+#rank_addtag_btn{background:url(../img/btn.png);border:none;width:70px;height:18px;_padding:10px 25px 11px 25px;color:#CCC;font-size:16px;font-weight:700;display:block;text-decoration:none;margin:20px 50px;padding:12px 25px}
 #rank_tag_list{display:block;font-size:12px;width:200px;padding:5px 10px}
 #rank_tag_list li{float:left;white-space:nowrap;margin:4px}
 #tag_area{width:300px;margin:0 auto}
@@ -87,8 +88,8 @@ h3{font-size:14px;margin:14px 0 0 14px}
 
 .info_btn{-moz-border-radius:4px;-webkit-border-radius:4px;background:#ddd url(../img/bg-btn.gif) repeat-x scroll 0 0;border-color:#ddd #ddd #ccc;border-style:solid;border-width:1px;color:#333;font-size:12px;line-height:14px;margin:0;overflow:visible;padding:4px 8px 5px;}
 .info_btn:hover, .info_btn:focus {background-position:0 -6px;border-color:#999 #999 #888;color:#000;text-decoration:none;}
-.info_btn_hover{-moz-border-radius:4px;-webkit-border-radius:4px;background:#07f url(../img/bg-btn-blue.gif) repeat-x scroll 0 0;border-color:#ddd #ddd #ccc;border-style:solid;border-width:1px;color:#fff;font-size:12px;line-height:14px;margin:0;overflow:visible;padding:4px 8px 5px;	}
-.info_btn_hover:hover, .info_btn_hover:focus {background-position:0 -6px;border-color:#ddd #ddd #ccc;color:#fff;text-decoration:none;}
+.info_btn_hover{-moz-border-radius:4px;-webkit-border-radius:4px;background:#07f url(../img/bg-btn-blue.gif) repeat-x scroll 0 0;border-color:#ddd #ddd #ccc;border-style:solid;border-width:1px;color:#CCC;font-size:12px;line-height:14px;margin:0;overflow:visible;padding:4px 8px 5px;	}
+.info_btn_hover:hover, .info_btn_hover:focus {background-position:0 -6px;border-color:#ddd #ddd #ccc;color:#CCC;text-decoration:none;}
 .info_is_following{margin:5px;background:url("../img/check.png") center left no-repeat;padding-left:18px;font-size:12px;}
 
 #subnav{border-bottom:1px solid #a9d9e2;clear:both;margin:22px 20px 10px;padding:0 8px 8px}
@@ -112,7 +113,7 @@ h3{font-size:14px;margin:14px 0 0 14px}
 .clear{clear:both}
 img,div{behavior:url(css/iepngfix.htc)}
 a,.timeline li:hover a:hover,.rank_list li:hover a:hover{color:#3280ab;text-decoration:none}
-#submit_btn:hover,#login_btn:hover,#rank_addtag_btn:hover,.submit_btn:hover{background:url(../img/btn.png);background-position:-120px;cursor:pointer}
+#submit_btn:hover,#login_btn:hover,#rank_addtag_btn:hover,.submit_btn:hover{cursor:pointer}
 .timeline li:hover,.rank_list li:hover{background-color:#f5f5f5}
 .timeline li:hover a,.rank_list li:hover a{color:#3280ab;text-decoration:underline}
 .status_author,.rank_img{left:10px;width:50px;position:absolute}
@@ -129,7 +130,7 @@ a,.timeline li:hover a:hover,.rank_list li:hover a:hover{color:#3280ab;text-deco
 #search_form{font-size:12px;margin:15px;text-align:center}
 #query{border:1px solid;border-color:#7c7c7c #c3c3c3 #ddd;width:200px;padding:3px;vertical-align:middle;margin:-2px 5px}
 #lang{padding:4px 10px;margin-top:3px;}
-#search_btn{ height:23px; padding:0 15px; border:1px solid; border-color:#febb6d #a46215 #a46215 #febb6d; background:#e99330; color:#fff; letter-spacing:0.3em; cursor:pointer;}
+#search_btn{ height:23px; padding:0 15px; border:1px solid; border-color:#febb6d #a46215 #a46215 #febb6d; background:#e99330; color:#CCC; letter-spacing:0.3em; cursor:pointer;}
 #header_search { width:120px;}
 #header_search form { z-index:10;position:absolute; top:3px; right:5px; width:135px; height:26px; background:url(../img/search_input.png) 0 0 no-repeat;}
 #header_search_query { float:left; width:90px; height:18px; padding:4px 0; border:0; background:transparent; font-size:14px; line-height:18px; text-indent:5px;}
@@ -150,8 +151,8 @@ a,.timeline li:hover a:hover,.rank_list li:hover a:hover{color:#3280ab;text-deco
 .allHighLight {background-color:#cff3d1}
 #refreshBtn{padding:6px 8px;font-size:12px;margin-top:19px}
 
-.link_btn{background:url(../img/btn.png);border:none;display:block;width:120px;height:32px;color:#FFF;font-size:16px;font-weight:700;margin:10px 20px 0 0;padding-top:10px;text-align:center}
-.link_btn:hover{text-decoration:none;background-position:-120px;color:#fff}
+.link_btn{background:url(../img/btn.png);border:none;display:block;width:120px;height:32px;color:#CCC;font-size:16px;font-weight:700;margin:10px 20px 0 0;padding-top:10px;text-align:center}
+.link_btn:hover{text-decoration:none;background-position:-120px;color:#CCC}
 
 .unshorturl{margin:5px 10px 3px 10px;padding:2px 15px;border:1px dotted #ccc;display:block;font-size:11px;}
 .unshorturl span{display:block;overflow:hidden;height:19px;width:380px;white-space:nowrap;}

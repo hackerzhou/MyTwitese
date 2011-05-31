@@ -19,3 +19,8 @@
 
 2011/05/28
 	1.增加了安装配置脚本，installer/install.sh，可以自动从github下载最新的release版本进行安装。运行方法：sudo ./install.sh
+
+2011/05/31
+	1.修改页面UI，增加textarea的高亮效果
+	2.如果没有输入，则submit按钮disable
+	3.去掉了分享到twitter的功能

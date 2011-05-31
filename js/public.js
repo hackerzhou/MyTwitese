@@ -7,7 +7,7 @@ formHTML += '<input type="submit" id="submit_btn" title="按ctrl+enter键发送"
 var isMobile = (/i686/.test(navigator.userAgent) && /U;/.test(navigator.userAgent)) || (/Opera Mini/.test(navigator.userAgent));
 function formFunc() {
 	leaveWord();
-	$("#textbox").focus();
+	//$("#textbox").focus();
 	$("#textbox").keydown(function(){leaveWord()}).keyup(function(){leaveWord()}).keydown(function(event){
 		if (event.ctrlKey && event.keyCode==13) {
 			updateStatus();
@@ -256,6 +256,8 @@ function onDelete($this, type) {
 function leaveWord(num) {
 	if (!num) num = 140;
 	var leave = num-$("#textbox").val().length;
+	document.getElementById("submit_btn").disabled = (leave == 140);
+	$("#submit_btn").css("color", (leave == 140) ? "#CCC" : "#333");
 	if (leave < 0) {
 		$("#tip").css("color","#CC0000");
 		$("#tip b").css("color","#CC0000");
