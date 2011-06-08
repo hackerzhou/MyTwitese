@@ -17,6 +17,12 @@ print()
   echo "\033[1;34m$1\033[0m"
 }
 
+input_string_filter()
+{
+  TEMP=$(echo $1 | sed -e "s/'/\\\'/g")
+  TEMP=$(echo $TEMP | sed -e 's/\"/\\\"/g')
+}
+
 print_config()
 {
   print "======================================"
@@ -51,6 +57,14 @@ check_web_url()
   return 0
 }
 
+check_install_dir()
+{
+  MATCH=$(echo "$INSTALL_DIR" | grep -E "/$")
+  if [ -n $MATCH ]; then
+    INSTALL_DIR=${INSTALL_DIR%/*}
+  fi
+}
+
 config_acl()
 {
   prompt "Config $1 ACL rules"
@@ -60,6 +74,8 @@ config_acl()
     prompt "Add a twitter id to the $1 (Press enter to finish adding) :"
     read INPUT
     if [ -n "$INPUT" ]; then
+      input_string_filter "$INPUT"
+      INPUT=$TEMP
       INPUT="\\\"$INPUT\\\""
       if [ -z "$TEMP" ]; then
         TEMP="$INPUT"
@@ -83,6 +99,7 @@ get_user_config()
     prompt "Please input the install folder :"
     read -r INSTALL_DIR
   done
+  check_install_dir
   RET=1
   until [ -n "$TWITESE_WEB_URL" -a $RET -eq 0 ]
   do
@@ -128,6 +145,21 @@ get_user_config()
       ACL_MODE="NOCONTROL_MODE";;
   esac
 
+  input_string_filter "$INSTALL_DIR"
+  INSTALL_DIR=$TEMP
+  input_string_filter "$APACHE_USER"
+  APACHE_USER=$TEMP
+  input_string_filter "$TWITESE_WEB_URL"
+  TWITESE_WEB_URL=$TEMP
+  input_string_filter "$REWRITE_BASE"
+  REWRITE_BASE=$TEMP
+  input_string_filter "$OAUTH_KEY"
+  OAUTH_KEY=$TEMP
+  input_string_filter "$OAUTH_SECRET"
+  OAUTH_SECRET=$TEMP
+  input_string_filter "$SITE_NAME"
+  SITE_NAME=$TEMP
+  
   echo "INSTALL_DIR=\"$INSTALL_DIR\"" > $CONFIG_FILE
   echo "APACHE_USER=\"$APACHE_USER\"" >> $CONFIG_FILE
   echo "TWITESE_WEB_URL=\"$TWITESE_WEB_URL\"" >> $CONFIG_FILE
@@ -154,7 +186,7 @@ install_mytwitese()
     exit 1;
   fi
   print "=> Downloading latest release ..."
-  #wget --no-check-certificate https://github.com/hackerzhou/MyTwitese/zipball/master -O MyTwitese.zip --timeout=30 -q
+  wget --no-check-certificate https://github.com/hackerzhou/MyTwitese/zipball/master -O MyTwitese.zip --timeout=30 -q
   if [ ! -f MyTwitese.zip ]; then
     error "Error: Cannot download MyTwitese!"
     exit 1;
@@ -162,12 +194,12 @@ install_mytwitese()
   print "=> Unzipping files ..."
   unzip -o MyTwitese.zip -d $INSTALL_DIR/ > /dev/null
   cp -rRp -f $INSTALL_DIR/hackerzhou-MyTwitese-*/. $INSTALL_DIR/
-  #cp -R -f $INSTALL_DIR/hackerzhou-MyTwitese-*/.htaccess $INSTALL_DIR/
+  cp -R -f $INSTALL_DIR/hackerzhou-MyTwitese-*/.htaccess $INSTALL_DIR/
   rm -R $INSTALL_DIR/hackerzhou-MyTwitese-*/
   print "=> Changing file mode and owner ..."
   chmod 755 -R $INSTALL_DIR/
   chown $APACHE_USER:$APACHE_USER -R $INSTALL_DIR/
-  #rm MyTwitese.zip
+  rm MyTwitese.zip
 }
 
 config_mytwitese()
@@ -208,10 +240,12 @@ case $1 in
   "--reconfig")
     #Remove config file if run with "install.sh reconfig"
     rm -f $CONFIG_FILE;;
+  "--clean")
+    ;;
   "")
     ;;
   *)
-    print "Usage: install.sh <--reconfig>"
+    print "Usage: install.sh <--reconfig|--clean>"
     print "Warning: reconfig will lose your previous configuration."
     print "If no parameter, script will automatically install/upgrade.\n"
     exit 0;;
@@ -225,6 +259,18 @@ fi
 #If config not valid, need user to do configuration
 if [ -z "$INSTALL_DIR" -a -z "$APACHE_USER" -a -z "$TWITESE_WEB_URL" ]; then
   get_user_config
+fi
+
+if [ $1 = "--cleanDir" ]; then
+  #backup api/oauth folder and remove install dir
+  if [ -d $INSTALL_DIR/api/oauth/ ]; then
+    cp -f -R $INSTALL_DIR/api/oauth/ ./
+  fi
+  rm -f -R $INSTALL_DIR
+  if [ -d ./oauth/ ]; then
+    cp -R -f ./oauth/ $INSTALL_DIR/api/oauth/
+    rm -R -f ./oauth/
+  fi
 fi
 
 #Print configuration
