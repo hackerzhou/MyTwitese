@@ -71,7 +71,7 @@ check_install_dir()
 config_acl()
 {
   prompt "Config $1 ACL rules"
-  TEMP=""
+  ACL_TEMP=""
   until [ -z "$INPUT" -a -n "$TEMP" ]
   do
     prompt "Add a twitter id to the $1 (Press enter to finish adding) :"
@@ -80,18 +80,18 @@ config_acl()
       input_string_filter "$INPUT"
       INPUT=$TEMP
       INPUT="\\\"$INPUT\\\""
-      if [ -z "$TEMP" ]; then
-        TEMP="$INPUT"
+      if [ -z "$ACL_TEMP" ]; then
+        ACL_TEMP="$INPUT"
       else
-        TEMP="$TEMP, $INPUT"
+        ACL_TEMP="$ACL_TEMP, $INPUT"
       fi
     fi
   done
   case $1 in
     "whitelist")
-      WHITELIST=$TEMP;;
+      WHITELIST=$ACL_TEMP;;
     "blacklist")
-      BLACKLIST=$TEMP;;
+      BLACKLIST=$ACL_TEMP;;
   esac
 }
 
@@ -179,7 +179,7 @@ get_user_config()
 
 install_mytwitese()
 {
-  if [ $1 = "fromCurrentDir" ]; then
+  if [ "$1" = "fromCurrentDir" ]; then
     print "\n## Install from current dir (for develop & debug) ##"
   else
     print "\n## Download and install ##"
@@ -193,7 +193,7 @@ install_mytwitese()
     echo "Error: Cannot create folder $INSTALL_DIR!"
     exit 1;
   fi
-  if [ $1 = "fromCurrentDir" ]; then
+  if [ "$1" = "fromCurrentDir" ]; then
     print "=> Copying files from current dir to install dir ..."
     cp -rRp -f ../. $INSTALL_DIR/
     cp -R -f ../.htaccess $INSTALL_DIR/
@@ -285,7 +285,7 @@ if [ -n "$MATCH" ]; then
   rm -f -R $INSTALL_DIR
   if [ -d ./oauth/ ]; then
     mkdir -p $INSTALL_DIR/api/oauth/
-    cp -R -f ./oauth/ $INSTALL_DIR/api/oauth/
+    cp -R -f ./oauth/* $INSTALL_DIR/api/oauth/
     rm -R -f ./oauth/
   fi
 fi
