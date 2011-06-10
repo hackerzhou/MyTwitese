@@ -1,6 +1,7 @@
 #!/bin/sh
 
 CONFIG_FILE="./config.cfg"
+ALLOW_NO_SSL=1
 
 prompt()
 {
@@ -44,9 +45,11 @@ print_config()
 check_web_url()
 {
   MATCH=$(echo "$TWITESE_WEB_URL" | grep -E "^https://[^\s]+")
-  if [ -z $MATCH ]; then
-    error "Error: URL must start with \"https://\" to anti-GFW!"
-    return 1
+  if [ $ALLOW_NO_SSL -eq 0 ]; then
+    if [ -z $MATCH ]; then
+      error "Error: URL must start with \"https://\" to anti-GFW!"
+      return 1
+    fi
   fi
   MATCH=$(echo "$TWITESE_WEB_URL" | grep -E "/$")
   if [ -z $MATCH ]; then
@@ -60,7 +63,7 @@ check_web_url()
 check_install_dir()
 {
   MATCH=$(echo "$INSTALL_DIR" | grep -E "/$")
-  if [ -n $MATCH ]; then
+  if [ -n "$MATCH" ]; then
     INSTALL_DIR=${INSTALL_DIR%/*}
   fi
 }
@@ -176,7 +179,12 @@ get_user_config()
 
 install_mytwitese()
 {
-  print "\n## Download and install ##"
+  if [ $1 = "fromCurrentDir" ]; then
+    print "\n## Install from current dir (for develop & debug) ##"
+  else
+    print "\n## Download and install ##"
+  fi
+  
   print "=> Check and creating folders ..."
   if [ ! -d $INSTALL_DIR ]; then
     mkdir -p $INSTALL_DIR
@@ -185,21 +193,27 @@ install_mytwitese()
     echo "Error: Cannot create folder $INSTALL_DIR!"
     exit 1;
   fi
-  print "=> Downloading latest release ..."
-  wget --no-check-certificate https://github.com/hackerzhou/MyTwitese/zipball/master -O MyTwitese.zip --timeout=30 -q
-  if [ ! -f MyTwitese.zip ]; then
-    error "Error: Cannot download MyTwitese!"
-    exit 1;
+  if [ $1 = "fromCurrentDir" ]; then
+    print "=> Copying files from current dir to install dir ..."
+    cp -rRp -f ../. $INSTALL_DIR/
+    cp -R -f ../.htaccess $INSTALL_DIR/
+  else
+    print "=> Downloading latest release ..."
+    wget --no-check-certificate https://github.com/hackerzhou/MyTwitese/zipball/master -O MyTwitese.zip --timeout=30 -q
+    if [ ! -f MyTwitese.zip ]; then
+      error "Error: Cannot download MyTwitese!"
+      exit 1;
+    fi
+    print "=> Unzipping files ..."
+    unzip -o MyTwitese.zip -d $INSTALL_DIR/ > /dev/null
+    cp -rRp -f $INSTALL_DIR/hackerzhou-MyTwitese-*/. $INSTALL_DIR/
+    cp -R -f $INSTALL_DIR/hackerzhou-MyTwitese-*/.htaccess $INSTALL_DIR/
+    rm -R $INSTALL_DIR/hackerzhou-MyTwitese-*/
+    rm MyTwitese.zip
   fi
-  print "=> Unzipping files ..."
-  unzip -o MyTwitese.zip -d $INSTALL_DIR/ > /dev/null
-  cp -rRp -f $INSTALL_DIR/hackerzhou-MyTwitese-*/. $INSTALL_DIR/
-  cp -R -f $INSTALL_DIR/hackerzhou-MyTwitese-*/.htaccess $INSTALL_DIR/
-  rm -R $INSTALL_DIR/hackerzhou-MyTwitese-*/
   print "=> Changing file mode and owner ..."
   chmod 755 -R $INSTALL_DIR/
   chown $APACHE_USER:$APACHE_USER -R $INSTALL_DIR/
-  rm MyTwitese.zip
 }
 
 config_mytwitese()
@@ -236,20 +250,21 @@ if [ ! $USER = "root" ]; then
   exit 1;
 fi
 
-case $1 in
-  "--reconfig")
-    #Remove config file if run with "install.sh reconfig"
-    rm -f $CONFIG_FILE;;
-  "--clean")
-    ;;
-  "")
-    ;;
-  *)
-    print "Usage: install.sh <--reconfig|--clean>"
-    print "Warning: reconfig will lose your previous configuration."
-    print "If no parameter, script will automatically install/upgrade.\n"
-    exit 0;;
-esac
+MATCH=$(echo "$@" | grep "\-\-help")
+if [ -n "$MATCH" ]; then
+  print "Usage: install.sh (--reconfig|--cleanInstallDir|--help|--fromCurrentDir)"
+  print "  reconfig will lose your previous configuration."
+  print "  cleanInstallDir will remove all files but oauth in installdir."
+  print "  fromCurrentDir will install MyTwitese from current dir."
+  print "  If no parameter, script will automatically install/upgrade.\n"
+  exit 0
+fi
+
+MATCH=$(echo "$@" | grep "\-\-reconfig")
+if [ -n "$MATCH" ]; then
+  #Remove config file if run with "install.sh reconfig"
+  rm -f $CONFIG_FILE
+fi
 
 #Load config file if exists
 if [ -f $CONFIG_FILE -a -r $CONFIG_FILE ]; then
@@ -261,13 +276,15 @@ if [ -z "$INSTALL_DIR" -a -z "$APACHE_USER" -a -z "$TWITESE_WEB_URL" ]; then
   get_user_config
 fi
 
-if [ $1 = "--cleanDir" ]; then
+MATCH=$(echo "$@" | grep "\-\-cleanInstallDir")
+if [ -n "$MATCH" ]; then
   #backup api/oauth folder and remove install dir
   if [ -d $INSTALL_DIR/api/oauth/ ]; then
     cp -f -R $INSTALL_DIR/api/oauth/ ./
   fi
   rm -f -R $INSTALL_DIR
   if [ -d ./oauth/ ]; then
+    mkdir -p $INSTALL_DIR/api/oauth/
     cp -R -f ./oauth/ $INSTALL_DIR/api/oauth/
     rm -R -f ./oauth/
   fi
@@ -277,7 +294,12 @@ fi
 print_config
 
 #Download and install mytwitese
-install_mytwitese
+MATCH=$(echo "$@" | grep "\-\-fromCurrentDir")
+if [ -n "$MATCH" ]; then
+  install_mytwitese "fromCurrentDir"
+else
+  install_mytwitese
+fi
 
 #Config mytwitese
 config_mytwitese

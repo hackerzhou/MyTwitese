@@ -24,3 +24,10 @@
 	1.修改页面UI，增加textarea的高亮效果
 	2.如果没有输入，则submit按钮disable
 	3.去掉了分享到twitter的功能
+
+2011/06/08
+	1.Fix bugs in installer/install.sh
+	2.Change *.php file mode
+2011/06/10
+	1.Update jquery with version 1.6.1
+	2.Implement cleanInstallDir / fromCurrentDir in install.sh
