@@ -73,7 +73,10 @@
 			header('location: error.php');
 		} 
 		$empty = count($messages) == 0? true: false;
-		if ($empty) {
+		$error = $messages->errors;
+		if ($error) {
+			echo "<div id=\"error\">应用权限不够，请访问<a href=\"https://dev.twitter.com/apps\">https://dev.twitter.com/apps</a>，将应用的权限设置为\"Read, Write and Direct Messages\"。</div>";
+		}else if ($empty) {
 			echo "<div id=\"empty\">此页无消息</div>";
 		} else {
 			$output = '<ol class="timeline" id="allTimeline">';

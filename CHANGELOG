@@ -28,6 +28,11 @@
 2011/06/08
 	1.Fix bugs in installer/install.sh
 	2.Change *.php file mode
+
 2011/06/10
 	1.Update jquery with version 1.6.1
 	2.Implement cleanInstallDir / fromCurrentDir in install.sh
+
+2011/08/13
+	1.Notify user when application's access level is limited (can not access direct message).
+	2.Change direct message UI.
