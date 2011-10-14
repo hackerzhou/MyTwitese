@@ -127,7 +127,7 @@
 		
 		$objs = false;
 		
-		if(preg_match_all('/http:\/\/[a-z0-9\/\.]+[^<]/i',$text,$urls,PREG_PATTERN_ORDER)){
+		/*if(preg_match_all('/http:\/\/[a-z0-9\/\.]+[^<]/i',$text,$urls,PREG_PATTERN_ORDER)){
 			foreach($urls[0] as $url) {
 				foreach($urlRegs as $urlReg) {
 					if(preg_match_all($urlReg,$url,$matchs,PREG_PATTERN_ORDER)){
@@ -140,7 +140,7 @@
 					}
 				}
 			}
-		}
+		}*/
 		return $objs;
 	}
 	
