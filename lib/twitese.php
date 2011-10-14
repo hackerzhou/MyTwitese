@@ -292,6 +292,11 @@
 				$output .= "<li>";
 			}
 			
+			$hasCoordinates = $status->coordinates;
+			if ($hasCoordinates) {
+				
+			}
+			
 			$output .= "
 					<span class=\"status_author\">
 						<a href=\"user.php?id=$user->screen_name\" target=\"_blank\"><img src=\"$user->profile_image_url\" title=\"$user->screen_name\" /></a>
